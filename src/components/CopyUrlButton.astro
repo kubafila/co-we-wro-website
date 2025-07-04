@@ -9,7 +9,7 @@ import {Share} from "@lucide/astro";
 </style>
 <button id="copy-url-btn"><Share />Udostępnij</button>
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
+  document.addEventListener("astro:page-load", () => {
     const button = document.getElementById('copy-url-btn');
 
     if (!button) return;

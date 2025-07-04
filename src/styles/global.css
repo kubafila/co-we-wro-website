@@ -1,14 +1,14 @@
 
 :root {
-    --text-size-xs: 0.64rem;
-    --text-size-sm: 0.8rem;
+    --text-size-xs: 0.79rem;
+    --text-size-sm: 0.89rem;
     --text-size-md: 1rem;
-    --text-size-lg: 1.25rem;
-    --text-size-xl: 1.56rem;
-    --text-size-2xl: 1.95rem;
-    --text-size-3xl: 2.44rem;
-    --text-size-4xl: 3.05rem;
-    --text-size-5xl: 3.81rem;
+    --text-size-lg: 1.13rem;
+    --text-size-xl: 1.27rem;
+    --text-size-2xl: 1.42rem;
+    --text-size-3xl: 1.6rem;
+    --text-size-4xl: 1.8rem;
+    --text-size-5xl: 2.03rem;
 
     --spacing-xs: 4px;
     --spacing-sm: 8px;
@@ -52,6 +52,7 @@ h1 {
     color: #D27A01;
 
     font-size: var(--text-size-4xl);
+    margin-top: var(--spacing-2xl);
     margin-bottom: var(--spacing-2xl);
 
 }
@@ -60,6 +61,7 @@ h2 {
     color:#7A4400;
 
     font-size: var(--text-size-3xl);
+    margin-top: var(--spacing-md);
     margin-bottom: var(--spacing-md);
 }
 

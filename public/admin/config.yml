@@ -1,0 +1,166 @@
+local_backend:
+  url: http://localhost:8081/api/v1
+backend:
+  name: git-gateway
+  branch: main # Branch to update (optional; defaults to master)
+
+# These lines should *not* be indented
+media_folder: "/src/assets"
+public_folder: "assets"
+
+locale: 'pl'
+i18n:
+  structure: single_file
+  locales: [ pl ]
+  default_locale: pl
+
+collections:
+  - name: 'pages'
+    label: "Strony"
+    i18n:
+      structure: single_file
+      locales: [ pl ]
+    sortable_fields: [ ]
+    editor:
+      preview: false
+    files:
+      - name: "homepage"
+        i18n: true
+        label: "Strona główna"
+        file: src/content/pages/homepage.md
+        fields:
+          - { label: "Ilustracja", name: "image", widget: "image", choose_url: false, public_folder: '/src/assets/', i18n: duplicate }
+      - name: "about"
+        label: "O mnie"
+        file: src/content/pages/about.md
+        i18n: true
+        fields:
+          - { label: "Tytuł strony", name: "title", widget: "string", i18n: true }
+          - { label: "Opis", name: "description", widget: "markdown", i18n: true }
+      - name: "portfolio"
+        label: "Portfolio"
+        file: src/content/pages/portfolio.md
+        i18n: true
+        fields:
+          - { label: "Tytuł strony", name: "title", widget: "string", i18n: true }
+          - label: "Projekty"
+            name: "items"
+            widget: "list"
+            summary: '{{fields.title}}'
+            fields:
+              - { label: "Widoczny na stronie", name: "visible", widget: "boolean", default: true }
+              - { label: "Tytuł", name: "title", widget: "string" }
+              - { label: "Slug", name: "slug", widget: "string", hint: 'Jaka ma być końcóweczka adresu strony. Bez spacji i polskich znaków. np. /portfolio/na-kurze-roze' }
+              - { label: "Okładka", name: "image", widget: "image", choose_url: false, public_folder: '/src/assets/', i18n: duplicate, allow_multiple: false }
+              - label: "Dodatkowe grafiki"
+                name: "additionalImages"
+                widget: "image"
+                choose_url: false
+                public_folder: "/src/assets/"
+                i18n: duplicate
+                allow_multiple: true
+                required: false
+                media_library:
+                  config:
+                    multiple: true
+              - { label: "Opis", name: "description", widget: "markdown", i18n: true, required: false }
+      - name: "offer-page"
+        label: "Oferta"
+        i18n: true
+        file: src/content/pages/offer.md
+        fields:
+          - { label: "Tytuł strony", name: "title", widget: "string", i18n: true }
+          - { label: "Opis", name: "description", widget: "markdown", i18n: true,  required: false }
+      - name: "contact-page"
+        label: "Kontakt"
+        i18n: true
+        file: src/content/pages/contact.md
+        fields:
+          - { label: "Tytuł strony", name: "title", widget: "string", i18n: true }
+          - { label: "Opis", name: "description", widget: "markdown", i18n: true,  required: false }
+      - name: "error-404"
+        i18n: true
+        label: "Strona 404 - Adresu nie znaleziono"
+        file: src/content/pages/error.md
+        fields:
+          - { label: "Ilustracja", name: "image", widget: "image", choose_url: false, public_folder: '/src/assets/', i18n: duplicate }
+          - { label: "Opis", name: "description", widget: "markdown", i18n: true }
+  - name: 'settings'
+    label: 'Ustawienia'
+    sortable_fields: [ ]
+    i18n:
+      structure: single_file
+      locales: [ pl ]
+    files:
+      - file: src/content/settings/meta.md
+        label: 'Meta tagi'
+        name: 'meta'
+        i18n: true
+        create: false
+        delete: false
+        editor:
+          preview: false
+        fields:
+          - label: "Meta Tagi"
+            hint: 'Meta tagi - https://pomoc.home.pl/baza-wiedzy/najwazniejsze-znaczniki-meta-i-ich-funkcje-meta-tagi'
+            i18n: true
+            name: "metaTags"
+            widget: "object"
+            fields:
+              - { label: "Tytuł strony", name: "title", hint: 'Widoczny w tytule przeglądarki', widget: "string" , i18n: true }
+              - { label: "Meta description - opis strony", name: "description", hint: 'Najlepiej między 50 a 150 znaków', widget: "text", i18n: true }
+              - { label: "Meta keywords - Słowa kluczowe", name: "keywords", hint: 'Oddzielone przecinkami', widget: "text", i18n: true }
+          - label: "Tagi Open Graph"
+            hint: "Tagi Open Grap - Np. Jak ma wyglądać podgląd, kiedy wysyłasz stronę przez Facebooka https://lumo.pl/blog/open-graph/. Sprawdź jak wygląda podgląd na https://developers.facebook.com/tools/debug/"
+            i18n: true
+            name: "openGraph"
+            widget: "object"
+            summary: 'Tagi Open Graph'
+            fields:
+              - { label: "Tytuł - Podgląd w social mediach", name: "title", widget: "string", hint: 'Tytuł podglądu kiedy np. kiedy wysyłasz stronę przez Facebooka albo LinkedIn', i18n: true }
+              - { label: "Opis - Podgląd w social mediach", name: "description", widget: "text", i18n: true }
+              - label: "Zdjęcie - Podgląd w social mediach"
+                name: "image"
+                widget: "image"
+                choose_url: false
+                public_folder: "/src/assets/"
+                i18n: "duplicate"
+      - file: src/content/settings/menu.md
+        label: 'Menu'
+        name: 'menu'
+        i18n: true
+        create: true
+        delete: false
+        editor:
+          preview: false
+        fields:
+          - { label: "Zmień kolor aktywnej zakładki", name: "highlight", widget: "boolean", default: true }
+          - { label: 'Kolor aktywnej zakładki', name: 'background', widget: 'color' }
+          - label: "Strona główa"
+            i18n: true
+            name: "homepage"
+            widget: "object"
+            fields:
+              - { label: "Grafika", name: "image", widget: "image", choose_url: false, public_folder: '/src/assets/', i18n: duplicate }
+              - { label: "Tekst alternatywny", name: "altText", hint: "Np. jak się obrazek nie wczyta, albo dla czytników ekranowych",  widget: "string" , i18n: true }
+  - label: "Tydzień"
+    name: "week"
+    folder: "src/content/cowewro"
+    slug: "{{fields.dateFrom}}"
+    create: true
+    fields:
+      - { label: "Tytuł", name: "title",   widget: "string" , i18n: true }
+      - { label: "Tydzień od - ", name: "dateFrom", widget: "datetime", format: "YYYY-MM-DD",  i18n: true,  }
+      - { label: "Tydzień do - ", name: "dateTo", widget: "datetime", format: "YYYY-MM-DD",  i18n: true,  }
+      - label: "Wydarzenia"
+        name: "events"
+        widget: "list"
+        summary: '{{fields.title}}'
+        fields:
+          - { label: "Tytuł", name: "title", widget: "string" }
+          - { label: "Data", name: "date", widget: "string" }
+          - { label: "Miejsce", name: "location", widget: "string" }
+          - { label: "Cena", name: "price", widget: "string", required: false }
+          - { label: "Zapisy", name: "registration", widget: "string", required: false }
+          - { label: "Opis", name: "body", widget: "markdown" }
+

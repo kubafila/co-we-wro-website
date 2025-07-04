@@ -1,0 +1,50 @@
+---
+import {marked} from "marked";
+import DOMPurify from "isomorphic-dompurify";
+import {removeEmoji} from "../ustils/remove-emoji";
+const {title, date, price, body, slug, location, linkToEventPage, registration} = Astro.props
+
+import {MapPin, CalendarDays, HandCoins} from '@lucide/astro';
+const renderHTMLFromMarkdown = (markdownText) =>
+  DOMPurify.sanitize(marked.parse(markdownText));
+---
+<style>
+    a {
+        color: inherit;
+        text-decoration: none;
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+    p{
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    article{
+        max-width: 70ch;
+    }
+</style>
+<article transition:name={`${slug}-event`}>
+
+
+    <header>
+      {linkToEventPage
+        ? <a href={linkToEventPage} class="title-link">
+                  <h2>{title}</h2>
+              </a>
+        :
+              <header><h2>{title}</h2></header>
+
+      }
+    </header>
+
+    <Fragment set:html={renderHTMLFromMarkdown(body ?? "")}/>
+
+    <footer>
+      {date && <p><CalendarDays />{removeEmoji(date)}</p>}
+      {location && <p><MapPin /> {removeEmoji(location)}</p>}
+      {price && <p><HandCoins />{removeEmoji(price)}</p>}
+      {registration && <p>- {removeEmoji(registration)}</p>}
+    </footer>
+</article>

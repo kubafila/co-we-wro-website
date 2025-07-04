@@ -3,12 +3,22 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "astro dev",
+    "dev": "npx decap-server & astro dev",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^5.11.0"
+    "@fontsource-variable/plus-jakarta-sans": "^5.2.6",
+    "@fontsource/fira-sans": "^5.2.6",
+    "@lucide/astro": "^0.523.0",
+    "astro": "^5.10.1",
+    "emoji-regex": "^10.4.0",
+    "isomorphic-dompurify": "^2.25.0",
+    "marked": "^15.0.12",
+    "slugify": "^1.6.6"
+  },
+  "devDependencies": {
+    "sass-embedded": "^1.89.2"
   }
 }

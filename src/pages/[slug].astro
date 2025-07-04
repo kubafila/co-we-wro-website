@@ -1,0 +1,50 @@
+---
+import DOMPurify from "isomorphic-dompurify";
+import {marked} from "marked";
+import {getCollection, getEntry, render} from 'astro:content';
+import Layout from "../layouts/Layout.astro";
+import slugify from "slugify";
+import EventCard from "../components/EventCard.astro";
+
+const {slug} = Astro.params;
+export async function getStaticPaths() {
+  const weeks = await getCollection('weeks');
+  return weeks.map(item => ({
+    params: {slug: item.id},
+  }));
+}
+
+
+
+const entry = await getEntry('weeks', slug)
+const data = entry.data
+
+
+const renderHTMLFromMarkdown = (markdownText) =>
+  DOMPurify.sanitize(marked.parse(markdownText));
+---
+<style is:global>
+
+</style>
+<style lang="scss">
+    h1{
+        text-align: center;
+    }
+  .wrapper {
+    display: flex;
+      flex-direction: column;
+    gap: 64px;
+      flex-wrap: nowrap;
+align-items: center;
+  }
+</style>
+
+
+<Layout>
+    <h1>{data.title}</h1>
+    <div class="wrapper">
+      {data.events.map(event => {
+          const eventSlug = slugify(event.title, {lower: true, strict: true})
+          return ( <EventCard {...event} linkToEventPage={`/${entry.id}/wydarzenie/${eventSlug}`} slug={eventSlug}/>)})}
+    </div>
+</Layout>

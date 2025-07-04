@@ -1,0 +1,72 @@
+---
+import DOMPurify from "isomorphic-dompurify";
+import {marked} from "marked";
+import {getCollection, getEntry} from 'astro:content';
+import Layout from "../../../layouts/Layout.astro";
+import slugify from "slugify";
+import EventCard from "../../../components/EventCard.astro";
+
+export async function getStaticPaths() {
+  const weeks = await getCollection('weeks');
+  let output = [];
+
+  for (let weekEntry of weeks) {
+    for (let event of weekEntry.data.events) {
+      output.push({
+        params: {
+          week: weekEntry.id,
+          slug: slugify(event.title, {lower: true, strict: true})
+        }
+      });
+    }
+  }
+
+  console.log(output)
+  return output;
+}
+
+const {slug, week} = Astro.params;
+
+const renderHTMLFromMarkdown = (markdownText) =>
+  DOMPurify.sanitize(marked.parse(markdownText));
+
+// To działa, bo Astro pozwala na async w frontmatter po `getStaticPaths`
+const entry = await getEntry('weeks', week);
+const event = entry.data.events.find(
+  (e) => slugify(e.title, {lower: true, strict: true}) === slug
+);
+
+if (!event) {
+  throw new Error(`Event not found for slug: ${slug} in week: ${week}`);
+}
+---
+
+<style lang="scss">
+  h1 {
+    text-align: center;
+  }
+
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 64px;
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+
+
+  .back {
+    display: block;
+    margin-bottom: 2rem;
+  }
+
+</style>
+<Layout>
+    <h1>{entry.data.title}</h1>
+    <div class="wrapper">
+        <a href={`/${entry.id}`} class="back">
+            <button>Wróć do listy</button>
+        </a>
+        <EventCard {...event} slug={slug}/>
+    </div>
+</Layout>

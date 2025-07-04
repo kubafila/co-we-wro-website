@@ -1,16 +1,13 @@
 ---
+import {getEntry, getCollection, render} from "astro:content";
+import Layout from "../layouts/Layout.astro";
+const locale = Astro.currentLocale ?? 'pl';
+const weeks = await getCollection('weeks');
 
 ---
+<Layout>
+<h1>Lista wydarzeń</h1>
+  {weeks.map(week => <h2><a href={`/${week.id}`}>{week.data.title}</a></h2>)}
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+     <!--<pre>{JSON.stringify(weeks, null, 2)}</pre>-->
+</Layout>

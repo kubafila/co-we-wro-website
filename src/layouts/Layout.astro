@@ -1,0 +1,59 @@
+---
+import {getEntry} from "astro:content";
+const locale = Astro.currentLocale ?? 'pl';
+import {Image} from 'astro:assets';
+import {ClientRouter} from "astro:transitions";
+import '../styles/reset.css'
+import '../styles/global.css'
+import '../styles/layout.scss'
+import '@fontsource-variable/plus-jakarta-sans';
+import '@fontsource/fira-sans';
+
+import Menu from "../components/menu/Menu.astro";
+
+const siteSettingsEntry = await getEntry('metaSettings', 'meta');
+const siteSettings = siteSettingsEntry.data[locale];
+const {withoutBodyTransition} = Astro.props
+---
+<html lang="pl"  data-theme="light">
+<head>
+    <meta charset="utf-8"/>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+    <meta name="viewport" content="width=device-width"/>
+    <meta name="generator" content={Astro.generator}/>
+    <!-- META TAGS -->
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width"/>
+    <meta name="generator" content={Astro.generator}/>
+    <meta name="description" content={siteSettings.metaTags.description}/>
+    <meta name="keywords" content={siteSettings.metaTags.keywords}/>
+    <meta name="robots" content="index,follow"/>
+    <!-- OPEN GRAPH -->
+    <meta property="og:locale" content={locale}/>
+    <meta property="og:title" content={siteSettings.openGraph.title}/>
+    <meta
+            property="og:description"
+            content={siteSettings.openGraph.description}
+    />
+    <meta property="og:type" content="website"/>
+    <!--<meta-->
+    <!--        property="og:image"-->
+    <!--        content={siteSettings.openGraph.image.src}-->
+    <!--/>-->
+    <!-- -->
+    <title>{siteSettings.metaTags.title}</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+    >
+
+    <ClientRouter/>
+</head>
+<body>
+<div class="page-wrapper">
+    <main transition:name="body" transition:animate={withoutBodyTransition ? 'none' : 'fade'} class="container">
+        <slot/>
+    </main>
+</div>
+</body>
+</html>

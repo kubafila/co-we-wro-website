@@ -1,0 +1,82 @@
+
+:root {
+    --text-size-xs: 0.64rem;
+    --text-size-sm: 0.8rem;
+    --text-size-md: 1rem;
+    --text-size-lg: 1.25rem;
+    --text-size-xl: 1.56rem;
+    --text-size-2xl: 1.95rem;
+    --text-size-3xl: 2.44rem;
+    --text-size-4xl: 3.05rem;
+    --text-size-5xl: 3.81rem;
+
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+    --spacing-2xl: 40px;
+    --spacing-3xl: 48px;
+
+
+    --color-orange: rgb(186, 88, 35);
+    --color-brown: rgb(102, 20, 0);
+    --color-green: rgb(141, 137, 48);
+    --color-yellow: rgb(243, 195, 68);
+    --color-blue: rgb(33, 80, 104);
+    --color-pink: rgb(232, 153, 142);
+
+}
+
+html {
+    font-size: 16px;
+        /*scroll-behavior: smooth;*/
+    color: #173949;
+}
+
+body {
+    font-family: 'Fira Sans', sans-serif;
+    overflow-x: hidden;
+}
+
+p {
+    font-size: 1em;
+    line-height: 1.5em;
+
+}
+
+h1 {
+    color: var(--color-blue);
+    font-size: var(--text-size-4xl);
+    margin-bottom: var(--spacing-2xl);
+
+}
+
+h2 {
+    font-size: var(--text-size-3xl);
+    margin-bottom: var(--spacing-md);
+}
+
+h3 {
+    font-size: var(--text-size-2xl);
+}
+
+h4 {
+    font-size: var(--text-size-xl);
+}
+
+h5 {
+    font-size: var(--text-size-lg);
+}
+
+.text-wrapper {
+    max-width: 60ch;
+}
+
+p {
+    margin-bottom: 1rem;
+}
+
+ul, ol{
+ padding-left: 1rem;
+}

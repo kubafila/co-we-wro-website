@@ -6,6 +6,7 @@ import Layout from "../../../layouts/Layout.astro";
 import slugify from "slugify";
 import EventCard from "../../../components/EventCard.astro";
 import {Share, MoveLeft} from  '@lucide/astro';
+import CopyUrlButton from "../../../components/CopyUrlButton.astro";
 export async function getStaticPaths() {
   const weeks = await getCollection('weeks');
   let output = [];
@@ -84,7 +85,7 @@ if (!event) {
         <a href={`/${entry.id}`} class="back">
             <button class="outline"><MoveLeft />Wróć do listy</button>
         </a>
-            <button ><Share />Udostępnij</button>
+            <CopyUrlButton />
     </div>
 
         <EventCard {...event} slug={slug}/>

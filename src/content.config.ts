@@ -1,5 +1,5 @@
 import {z, defineCollection} from "astro:content";
-import {file, glob} from 'astro/loaders'; // Not available with legacy API
+import { glob} from 'astro/loaders'; // Not available with legacy API
 
 
 /// Ustawienia
@@ -27,17 +27,18 @@ const metaSettings = defineCollection({
 });
 
 export const weekSchema = z.object({
-  title: z.string(), // Tytuł tygodnia
-  dateFrom: z.date(), // Tydzień od
-  dateTo: z.date(),   // Tydzień do
+  title: z.string(),
+  dateFrom: z.date(),
+  dateTo: z.date(),
   events: z.array(
     z.object({
-      title: z.string(),         // Tytuł wydarzenia
-      date: z.string(),          // Data wydarzenia (można zmienić na
-      location: z.string(),      // Miejsce wydarzenia
-      price: z.string().optional(),         // Cena (opcjonalnie)
-      registration: z.string().optional(),  // Zapisy (opcjonalnie)
-      body: z.string(),          // Opis (markdown)
+      title: z.string(),
+      date: z.string(),
+      location: z.string(),
+      price: z.string().optional(),
+      registration: z.string().optional(),
+      link: z.string().optional(),
+      body: z.string(),
     })
   )
 })

@@ -9,8 +9,6 @@ import '../styles/layout.scss'
 import '@fontsource-variable/plus-jakarta-sans';
 import '@fontsource/fira-sans';
 
-import Menu from "../components/menu/Menu.astro";
-
 const siteSettingsEntry = await getEntry('metaSettings', 'meta');
 const siteSettings = siteSettingsEntry.data[locale];
 const {withoutBodyTransition} = Astro.props
@@ -44,9 +42,8 @@ const {withoutBodyTransition} = Astro.props
     <title>{siteSettings.metaTags.title}</title>
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.pumpkin.min.css"
     >
-
     <ClientRouter/>
 </head>
 <body>
@@ -55,5 +52,8 @@ const {withoutBodyTransition} = Astro.props
         <slot/>
     </main>
 </div>
+<footer class="page-footer">
+    Źródło: <a href="https://wydarzeniawewroclawiu.pl/">https://wydarzeniawewroclawiu.pl/</a>
+</footer>
 </body>
 </html>

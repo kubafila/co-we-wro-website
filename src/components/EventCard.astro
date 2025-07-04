@@ -2,14 +2,14 @@
 import {marked} from "marked";
 import DOMPurify from "isomorphic-dompurify";
 import {removeEmoji} from "../ustils/remove-emoji";
-const {title, date, price, body, slug, location, linkToEventPage, registration} = Astro.props
+const {title, date, price, body, slug, location, linkToEventPage, registration, link} = Astro.props
 
-import {MapPin, CalendarDays, HandCoins} from '@lucide/astro';
+import {MapPin, CalendarDays, Wallet, Link} from '@lucide/astro';
 const renderHTMLFromMarkdown = (markdownText) =>
   DOMPurify.sanitize(marked.parse(markdownText));
 ---
 <style>
-    a {
+    .title-link{
         color: inherit;
         text-decoration: none;
         width: 100%;
@@ -44,7 +44,8 @@ const renderHTMLFromMarkdown = (markdownText) =>
     <footer>
       {date && <p><CalendarDays />{removeEmoji(date)}</p>}
       {location && <p><MapPin /> {removeEmoji(location)}</p>}
-      {price && <p><HandCoins />{removeEmoji(price)}</p>}
-      {registration && <p>- {removeEmoji(registration)}</p>}
+      {price && <p><Wallet />{removeEmoji(price)}</p>}
+      {registration && <p><Link /><a href={registration}>Link do zapisów</a></p>}
+      {link && <p><Link /><a href={link}>Link do wydarzenia</a></p>}
     </footer>
 </article>

@@ -5,7 +5,7 @@ import {getCollection, getEntry} from 'astro:content';
 import Layout from "../../../layouts/Layout.astro";
 import slugify from "slugify";
 import EventCard from "../../../components/EventCard.astro";
-
+import {Share, MoveLeft} from  '@lucide/astro';
 export async function getStaticPaths() {
   const weeks = await getCollection('weeks');
   let output = [];
@@ -52,21 +52,41 @@ if (!event) {
     gap: 64px;
     flex-wrap: nowrap;
     align-items: center;
+      max-width: 70ch;
+      margin: 0 auto;
   }
 
 
   .back {
     display: block;
-    margin-bottom: 2rem;
+  }
+
+  .actions{
+      display: flex;
+      gap: 16px;
+      align-items: flex-end;
+      margin-bottom: 2rem;
+      justify-content: space-between;
+      width: 100%;
+
+  }
+
+  button{
+      display: flex;
+      gap: 8px;
   }
 
 </style>
 <Layout>
     <h1>{entry.data.title}</h1>
     <div class="wrapper">
+    <div class="actions">
         <a href={`/${entry.id}`} class="back">
-            <button>Wróć do listy</button>
+            <button class="outline"><MoveLeft />Wróć do listy</button>
         </a>
+            <button ><Share />Udostępnij</button>
+    </div>
+
         <EventCard {...event} slug={slug}/>
     </div>
 </Layout>

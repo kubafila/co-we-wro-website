@@ -30,11 +30,14 @@
 
 html {
     font-size: 16px;
-        /*scroll-behavior: smooth;*/
-    color: #173949;
+    background-color: hsl(35deg, 100%, 99%);
+    margin: 0;
+    padding: 0;
+    color: #482802;
 }
 
 body {
+
     font-family: 'Fira Sans', sans-serif;
     overflow-x: hidden;
 }
@@ -46,13 +49,16 @@ p {
 }
 
 h1 {
-    color: var(--color-blue);
+    color: #D27A01;
+
     font-size: var(--text-size-4xl);
     margin-bottom: var(--spacing-2xl);
 
 }
 
 h2 {
+    color:#7A4400;
+
     font-size: var(--text-size-3xl);
     margin-bottom: var(--spacing-md);
 }
@@ -75,6 +81,10 @@ h5 {
 
 p {
     margin-bottom: 1rem;
+}
+
+svg {
+    stroke: #7A4400;
 }
 
 ul, ol{

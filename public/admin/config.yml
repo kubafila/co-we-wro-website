@@ -1,5 +1,5 @@
 local_backend:
-  url: http://localhost:8081/api/v1
+  url: http://localhost:8082/api/v1
 backend:
   name: git-gateway
   branch: main # Branch to update (optional; defaults to master)
@@ -15,76 +15,6 @@ i18n:
   default_locale: pl
 
 collections:
-  - name: 'pages'
-    label: "Strony"
-    i18n:
-      structure: single_file
-      locales: [ pl ]
-    sortable_fields: [ ]
-    editor:
-      preview: false
-    files:
-      - name: "homepage"
-        i18n: true
-        label: "Strona główna"
-        file: src/content/pages/homepage.md
-        fields:
-          - { label: "Ilustracja", name: "image", widget: "image", choose_url: false, public_folder: '/src/assets/', i18n: duplicate }
-      - name: "about"
-        label: "O mnie"
-        file: src/content/pages/about.md
-        i18n: true
-        fields:
-          - { label: "Tytuł strony", name: "title", widget: "string", i18n: true }
-          - { label: "Opis", name: "description", widget: "markdown", i18n: true }
-      - name: "portfolio"
-        label: "Portfolio"
-        file: src/content/pages/portfolio.md
-        i18n: true
-        fields:
-          - { label: "Tytuł strony", name: "title", widget: "string", i18n: true }
-          - label: "Projekty"
-            name: "items"
-            widget: "list"
-            summary: '{{fields.title}}'
-            fields:
-              - { label: "Widoczny na stronie", name: "visible", widget: "boolean", default: true }
-              - { label: "Tytuł", name: "title", widget: "string" }
-              - { label: "Slug", name: "slug", widget: "string", hint: 'Jaka ma być końcóweczka adresu strony. Bez spacji i polskich znaków. np. /portfolio/na-kurze-roze' }
-              - { label: "Okładka", name: "image", widget: "image", choose_url: false, public_folder: '/src/assets/', i18n: duplicate, allow_multiple: false }
-              - label: "Dodatkowe grafiki"
-                name: "additionalImages"
-                widget: "image"
-                choose_url: false
-                public_folder: "/src/assets/"
-                i18n: duplicate
-                allow_multiple: true
-                required: false
-                media_library:
-                  config:
-                    multiple: true
-              - { label: "Opis", name: "description", widget: "markdown", i18n: true, required: false }
-      - name: "offer-page"
-        label: "Oferta"
-        i18n: true
-        file: src/content/pages/offer.md
-        fields:
-          - { label: "Tytuł strony", name: "title", widget: "string", i18n: true }
-          - { label: "Opis", name: "description", widget: "markdown", i18n: true,  required: false }
-      - name: "contact-page"
-        label: "Kontakt"
-        i18n: true
-        file: src/content/pages/contact.md
-        fields:
-          - { label: "Tytuł strony", name: "title", widget: "string", i18n: true }
-          - { label: "Opis", name: "description", widget: "markdown", i18n: true,  required: false }
-      - name: "error-404"
-        i18n: true
-        label: "Strona 404 - Adresu nie znaleziono"
-        file: src/content/pages/error.md
-        fields:
-          - { label: "Ilustracja", name: "image", widget: "image", choose_url: false, public_folder: '/src/assets/', i18n: duplicate }
-          - { label: "Opis", name: "description", widget: "markdown", i18n: true }
   - name: 'settings'
     label: 'Ustawienia'
     sortable_fields: [ ]
@@ -125,27 +55,9 @@ collections:
                 choose_url: false
                 public_folder: "/src/assets/"
                 i18n: "duplicate"
-      - file: src/content/settings/menu.md
-        label: 'Menu'
-        name: 'menu'
-        i18n: true
-        create: true
-        delete: false
-        editor:
-          preview: false
-        fields:
-          - { label: "Zmień kolor aktywnej zakładki", name: "highlight", widget: "boolean", default: true }
-          - { label: 'Kolor aktywnej zakładki', name: 'background', widget: 'color' }
-          - label: "Strona główa"
-            i18n: true
-            name: "homepage"
-            widget: "object"
-            fields:
-              - { label: "Grafika", name: "image", widget: "image", choose_url: false, public_folder: '/src/assets/', i18n: duplicate }
-              - { label: "Tekst alternatywny", name: "altText", hint: "Np. jak się obrazek nie wczyta, albo dla czytników ekranowych",  widget: "string" , i18n: true }
   - label: "Tydzień"
     name: "week"
-    folder: "src/content/cowewro"
+    folder: "src/content/weeks"
     slug: "{{fields.dateFrom}}"
     create: true
     fields:
@@ -161,6 +73,7 @@ collections:
           - { label: "Data", name: "date", widget: "string" }
           - { label: "Miejsce", name: "location", widget: "string" }
           - { label: "Cena", name: "price", widget: "string", required: false }
-          - { label: "Zapisy", name: "registration", widget: "string", required: false }
+          - { label: "Link do zapisów", name: "registration", widget: "string", required: false }
+          - { label: "Link do wydarzenia", name: "link", widget: "string", required: false }
           - { label: "Opis", name: "body", widget: "markdown" }
 

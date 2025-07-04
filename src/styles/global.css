@@ -37,7 +37,8 @@ html {
 }
 
 body {
-
+    margin: 0;
+    padding: 0;
     font-family: 'Fira Sans', sans-serif;
     overflow-x: hidden;
 }
@@ -51,7 +52,7 @@ p {
 h1 {
     color: #D27A01;
 
-    font-size: var(--text-size-4xl);
+    font-size: var(--text-size-5xl);
     margin-top: var(--spacing-2xl);
     margin-bottom: var(--spacing-2xl);
 

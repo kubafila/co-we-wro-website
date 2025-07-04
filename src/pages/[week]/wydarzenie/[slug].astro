@@ -36,6 +36,7 @@ const entry = await getEntry('weeks', week);
 const event = entry.data.events.find(
   (e) => slugify(e.title, {lower: true, strict: true}) === slug
 );
+const eventSlug = slugify(event.title, {lower: true, strict: true})
 
 if (!event) {
   throw new Error(`Event not found for slug: ${slug} in week: ${week}`);
@@ -53,7 +54,7 @@ if (!event) {
     gap: 64px;
     flex-wrap: nowrap;
     align-items: center;
-      max-width: 70ch;
+      max-width: 80ch;
       margin: 0 auto;
   }
 
@@ -77,17 +78,17 @@ if (!event) {
       gap: 8px;
   }
 
+
 </style>
 <Layout>
     <h1>{entry.data.title}</h1>
     <div class="wrapper">
     <div class="actions">
-        <a href={`/${entry.id}`} class="back">
+        <a href={`/${entry.id}#${eventSlug}`} class="back">
             <button class="outline"><MoveLeft />Wróć do listy</button>
         </a>
             <CopyUrlButton />
     </div>
-
         <EventCard {...event} slug={slug}/>
     </div>
 </Layout>

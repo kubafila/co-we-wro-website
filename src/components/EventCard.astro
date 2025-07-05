@@ -90,9 +90,25 @@ const renderHTMLFromMarkdown = (markdownText) =>
             const heartEl = article.querySelector('.heart-wrapper');
             if (!heartEl) return;
 
-            // Pobierz tablicę ulubionych z localStorage
-            const getFavs = () => JSON.parse(localStorage.getItem('favs') || '[]');
-            const setFavs = (arr) => localStorage.setItem('favs', JSON.stringify(arr));
+            // Pobierz i zapisz obiekt settings z localStorage
+            const getSettings = (): { 'fav-events-id': string[] } => {
+                try {
+                    return JSON.parse(localStorage.getItem('settings') || '{}');
+                } catch {
+                    return {};
+                }
+            };
+            const setSettings = (settings: { 'fav-events-id': string[] }) => {
+                localStorage.setItem('settings', JSON.stringify(settings));
+            };
+
+            // Pobierz tablicę ulubionych
+            const getFavs = (): string[] => getSettings()['fav-events-id'] || [];
+            const setFavs = (arr: string[]) => {
+                const settings = getSettings();
+                settings['fav-events-id'] = arr;
+                setSettings(settings);
+            };
 
             // Ustaw stan serduszka na podstawie localStorage
             if (getFavs().includes(slug)) {
@@ -102,7 +118,7 @@ const renderHTMLFromMarkdown = (markdownText) =>
             heartEl.addEventListener('click', () => {
                 let favs = getFavs();
                 if (favs.includes(slug)) {
-                    favs = favs.filter(s => s !== slug);
+                    favs = favs.filter((s: string) => s !== slug);
                     heartEl.classList.remove('heart-wrapper--active');
                 } else {
                     favs.push(slug);

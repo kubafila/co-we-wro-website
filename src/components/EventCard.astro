@@ -4,17 +4,20 @@ import DOMPurify from "isomorphic-dompurify";
 import {removeEmoji} from "../ustils/remove-emoji";
 const {title, date, price, body, slug, location, linkToEventPage, registration, link} = Astro.props
 
-import {MapPin, CalendarDays, Wallet, Link} from '@lucide/astro';
+import {MapPin, CalendarDays, Wallet, Link, Heart} from '@lucide/astro';
 const renderHTMLFromMarkdown = (markdownText) =>
   DOMPurify.sanitize(marked.parse(markdownText));
 ---
-<style>
+<style lang="scss">
     .title-link{
         color: inherit;
         text-decoration: none;
         width: 100%;
         height: 100%;
         display: block;
+        &:hover{
+            text-decoration: underline ;
+        }
     }
     p{
         display: flex;
@@ -25,11 +28,37 @@ const renderHTMLFromMarkdown = (markdownText) =>
     article{
         max-width: 80ch;
     }
+    .event-header{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+
+        @media screen and (max-width: 580px){
+            flex-direction: column;
+        }
+    }
+    .heart-wrapper{
+        width: 48px;
+        height: 48px;
+        flex: 0 0 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+
+        &--active{
+            svg {
+                fill: #D93526;
+                stroke: #D93526;
+            }
+        }
+    }
 </style>
 <article transition:name={`${slug}-event`} id={slug}>
 
 
-    <header>
+    <header class="event-header">
       {linkToEventPage
         ? <a href={linkToEventPage} class="title-link">
                   <h2>{title}</h2>
@@ -38,6 +67,10 @@ const renderHTMLFromMarkdown = (markdownText) =>
               <header><h2>{title}</h2></header>
 
       }
+        <div class="heart-wrapper">
+        <Heart />
+
+        </div>
     </header>
 
     <Fragment set:html={renderHTMLFromMarkdown(body ?? "")}/>
@@ -50,3 +83,33 @@ const renderHTMLFromMarkdown = (markdownText) =>
       {link && <p><Link /><a href={link}>Link do wydarzenia</a></p>}
     </footer>
 </article>
+<script>
+    document.addEventListener("astro:page-load", () => {
+        document.querySelectorAll('article[id]').forEach(article => {
+            const slug = article.id;
+            const heartEl = article.querySelector('.heart-wrapper');
+            if (!heartEl) return;
+
+            // Pobierz tablicę ulubionych z localStorage
+            const getFavs = () => JSON.parse(localStorage.getItem('favs') || '[]');
+            const setFavs = (arr) => localStorage.setItem('favs', JSON.stringify(arr));
+
+            // Ustaw stan serduszka na podstawie localStorage
+            if (getFavs().includes(slug)) {
+                heartEl.classList.add('heart-wrapper--active');
+            }
+
+            heartEl.addEventListener('click', () => {
+                let favs = getFavs();
+                if (favs.includes(slug)) {
+                    favs = favs.filter(s => s !== slug);
+                    heartEl.classList.remove('heart-wrapper--active');
+                } else {
+                    favs.push(slug);
+                    heartEl.classList.add('heart-wrapper--active');
+                }
+                setFavs(favs);
+            });
+        });
+    });
+</script>

@@ -27,7 +27,7 @@ const renderHTMLFromMarkdown = (markdownText) =>
 
 </style>
 <style lang="scss">
-    h1{
+    .title{
         text-align: center;
     }
   .wrapper {
@@ -41,7 +41,7 @@ align-items: center;
 
 
 <Layout>
-    <h1>{data.title}</h1>
+    <h1 transition:name={`${entry.id}-title`} class="title">{data.title}</h1>
     <div class="wrapper">
       {data.events.map(event => {
           const eventSlug = slugify(event.title, {lower: true, strict: true})

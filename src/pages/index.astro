@@ -7,7 +7,5 @@ const weeks = await getCollection('weeks');
 ---
 <Layout>
 <h1>Lista wydarzeń</h1>
-  {weeks.map(week => <h2><a href={`/${week.id}`}>{week.data.title}</a></h2>)}
-
-     <!--<pre>{JSON.stringify(weeks, null, 2)}</pre>-->
+  {weeks.map(week =><h2 transition:name={`${week.id}-title`} class="title"> <a href={`/${week.id}`}>{week.data.title}</a></h2>)}
 </Layout>

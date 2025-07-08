@@ -60,6 +60,8 @@ collections:
     folder: "src/content/weeks"
     slug: "{{fields.dateFrom}}"
     create: true
+    editor:
+      preview: false
     fields:
       - { label: "Tytuł", name: "title",   widget: "string" , i18n: true }
       - { label: "Tydzień od - ", name: "dateFrom", widget: "datetime", format: "YYYY-MM-DD",  i18n: true,  }

@@ -47,16 +47,19 @@ const renderHTMLFromMarkdown = (markdownText) =>
         justify-content: center;
         cursor: pointer;
 
-
-        &--active{
-            svg {
-                fill: #D93526;
-                stroke: #D93526;
+    }
+    .event{
+        &--favourite{
+            .heart-wrapper{
+                svg {
+                    fill: #D93526;
+                    stroke: #D93526;
+                }
             }
         }
     }
 </style>
-<article transition:name={`${slug}-event`} id={slug}>
+<article transition:name={`${slug}-event`} id={slug} class="event">
 
 
     <header class="event-header">
@@ -86,9 +89,9 @@ const renderHTMLFromMarkdown = (markdownText) =>
 </article>
 <script>
     document.addEventListener("astro:page-load", () => {
-        document.querySelectorAll('article[id]').forEach(article => {
-            const slug = article.id;
-            const heartEl = article.querySelector('.heart-wrapper');
+        document.querySelectorAll('article[id]').forEach(articleEl => {
+            const slug = articleEl.id;
+            const heartEl = articleEl.querySelector('.heart-wrapper');
             if (!heartEl) return;
 
             // Pobierz i zapisz obiekt settings z localStorage
@@ -111,19 +114,18 @@ const renderHTMLFromMarkdown = (markdownText) =>
                 setSettings(settings);
             };
 
-            // Ustaw stan serduszka na podstawie localStorage
             if (getFavs().includes(slug)) {
-                heartEl.classList.add('heart-wrapper--active');
+                articleEl.classList.add('event--favourite');
             }
 
             heartEl.addEventListener('click', () => {
                 let favs = getFavs();
                 if (favs.includes(slug)) {
                     favs = favs.filter((s: string) => s !== slug);
-                    heartEl.classList.remove('heart-wrapper--active');
+                    articleEl.classList.remove('event--favourite');
                 } else {
                     favs.push(slug);
-                    heartEl.classList.add('heart-wrapper--active');
+                    articleEl.classList.add('event--favourite');
                 }
                 setFavs(favs);
             });

@@ -24,7 +24,9 @@ const renderHTMLFromMarkdown = (markdownText) =>
   DOMPurify.sanitize(marked.parse(markdownText));
 ---
 <style is:global>
-
+    .page-wrapper:has(#fav-checkbox:checked) .event:not(.event--favourite) {
+        display: none;
+    }
 </style>
 <style lang="scss">
     .title{
@@ -41,8 +43,16 @@ align-items: center;
 
 
 <Layout>
+
     <h1 transition:name={`${entry.id}-title`} class="title">{data.title}</h1>
     <div class="wrapper">
+
+            <label>
+                <input type="checkbox" id="fav-checkbox"/>
+                Pokaż tylko ulubione wydarzenia
+            </label>
+
+
       {data.events.map(event => {
           const eventSlug = slugify(event.title, {lower: true, strict: true})
           return ( <EventCard {...event} linkToEventPage={`/${entry.id}/wydarzenie/${eventSlug}`} slug={eventSlug}/>)})}
